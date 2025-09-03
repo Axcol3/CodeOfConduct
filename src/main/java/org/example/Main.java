@@ -7,13 +7,13 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Путь к файлу welcome.html (относительный или абсолютный)
-            File htmlFile = new File("src/main/java/org/example/public/welcome.html");
+            // Путь к файлу index.html (относительный или абсолютный)
+            File htmlFile = new File("src/main/java/org/example/public/index.html");
 
             // Проверяем, поддерживается ли Desktop
             if (Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().browse(htmlFile.toURI());
-                System.out.println("Opening welcome.html in your default browser...");
+                System.out.println("Opening index.html in your default browser...");
             } else {
                 System.out.println("Desktop not supported. Open the HTML file manually.");
             }
