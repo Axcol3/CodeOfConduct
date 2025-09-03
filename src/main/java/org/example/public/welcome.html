@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      margin:0;
+      background-image: url('image/background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    h1 { color:white; margin-bottom:20px; }
+    input {
+      padding:10px;
+      font-size:18px;
+      border-radius:8px;
+      border:2px solid #333;
+      width:250px;
+      margin-bottom:20px;
+    }
+    button {
+      padding:12px 30px;
+      font-size:18px;
+      font-weight:bold;
+      color:#fff;
+      background:#357ABD;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+    }
+    button:hover { background:#4a90e2; }
+  </style>
+</head>
+<body>
+<div class="welcome">
+  <h1>Welcome to game CodeOfConduct!</h1>
+
+  <button id="startBtn">Start</button>
+</div>
+
+<script>
+  const startBtn = document.getElementById('startBtn');
+
+  startBtn.addEventListener('click', () => {
+    // просто переходим на index.html
+    window.location.href = 'index.html';
+  });
+</script>
+</body>
+</html>

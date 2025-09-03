@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Items Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body >
+
+
+
+<div class="main-container">
+    <canvas id="lineCanvas"></canvas>
+    <h1>Lab Rules: Do’s and Don’ts Matching</h1>
+    <div class="score-container" style="display: flex; justify-content: space-around; align-items: center;">
+        <p style="font-size: 30px;">Score: <span id="score">0</span></p>
+    </div>
+<div class="container">
+    <div class="item" id="item1">
+        <img src="image/do-not-litter.png" class="image" ALT="Keep clean in classrooms and labs" BORDER="0">
+        <h2 class="text">Keep clean</h2>
+    </div>
+    <div class="item" id="item2">
+        <img src="image/run.png" class="image" ALT="Do not run in hallways" BORDER="0">
+        <h2 class="text">Run</h2>
+    </div>
+    <div class="item" id="item3">
+        <img src="image/people.png" class="image" ALT="Don't close doors hard" BORDER="0">
+        <h2 class="text">Close the door loudly</h2>
+    </div>
+    <div class="item" id="item4">
+        <img src="image/help.png" class="image" ALT="Help" BORDER="0">
+
+        <h2 class="text">Help others</h2>
+
+    </div>
+
+
+
+    <div class="item" id="item5">
+        <img src="image/phone.png" class="image" ALT="Disturb others" BORDER="0">
+        <h2 class="text">Disturb others</h2>
+    </div>
+
+</div>
+
+<div class="container" >
+    <div class="target" id="target1">
+        <img src="image/right.png" class="image" ALT="right" BORDER="0">
+
+    </div>
+    <div class="target" id="target2">
+        <img src="image/delete.png" class="image" ALT="wrong" BORDER="0">
+
+    </div>
+
+</div>
+    <div class="button" >
+        <button id="next">Next</button>
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+<!-- Модальное окно -->
+<div id="warningModal" class="modal">
+    <div class="modal-content">
+        <p>Please connect all items before starting!</p>
+        <button id="closeModal">OK</button>
+    </div>
+</div>
+</body>
+</html>

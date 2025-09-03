@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Etiquette Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="game-container">
+  <h1 class="title2">University Etiquette</h1>
+  <div class="score-container">
+    Score: <span id="score">0</span>
+  </div>
+  <div class="question-box">
+    <p id="question-text">Loading...</p>
+  </div>
+  <div class="button-container">
+    <button id="true-btn" class="true-button">True ✅</button>
+    <button id="false-btn" class="false-button">False ❌</button>
+  </div>
+</div>
+
+<div id="endGameModal" class="modal">
+  <div class="modal-content">
+    <h2 id="modal-title">Game Over!</h2>
+    <p id="final-score-text"></p>
+    <button id="restart-btn">Play Again</button>
+  </div>
+</div>
+
+<script src="script2.js"></script>
+</body>
+</html>
