@@ -7,9 +7,7 @@ canvas.width = container.offsetWidth;
 canvas.height = container.offsetHeight;
 
 // Game state variables
-let startElement = null;
-let isDrawing = false;
-let currentMouse = { x: 0, y: 0 };
+let selectedItem = null;
 const connections = new Map();
 
 // Correct answer key for the matching game
@@ -31,32 +29,41 @@ function getCenter(el) {
     };
 }
 
-// Event listeners for drawing lines
+// Event listener for all items (tap to select)
 document.querySelectorAll('.item').forEach(item => {
-    item.addEventListener('mousedown', () => {
-        startElement = item;
-        isDrawing = true;
-        document.querySelectorAll('.item').forEach(i => i.style.borderColor = '#333');
-        item.style.borderColor = 'green';
+    item.addEventListener('click', () => {
+        // Find and un-highlight any previously selected item
+        if (selectedItem) {
+            selectedItem.style.borderColor = '#333';
+        }
+
+        // Find and remove any previous connection for this item
+        const existingTarget = connections.get(item.id);
+        if (existingTarget) {
+            existingTarget.style.borderColor = '#333';
+            connections.delete(item.id);
+            draw();
+        }
+
+        // Highlight the new selected item
+        selectedItem = item;
+        selectedItem.style.borderColor = 'green';
     });
 });
 
-document.addEventListener('mousemove', (e) => {
-    if (isDrawing && startElement) {
-        const containerRect = container.getBoundingClientRect();
-        currentMouse.x = e.clientX - containerRect.left;
-        currentMouse.y = e.clientY - containerRect.top;
-        draw();
-    }
-});
-
+// Event listener for all targets (tap to connect)
 document.querySelectorAll('.target').forEach(target => {
-    target.addEventListener('mouseup', () => {
-        if (isDrawing && startElement) {
-            connections.set(startElement.id, target);
-            startElement.style.borderColor = '#333';
-            startElement = null;
-            isDrawing = false;
+    target.addEventListener('click', () => {
+        if (selectedItem) {
+            const isCorrect = correctAnswers[selectedItem.id] === target.id;
+
+            // Set border colors based on correctness
+            target.style.borderColor = isCorrect ? 'green' : 'red';
+            selectedItem.style.borderColor = isCorrect ? 'green' : 'red';
+
+            // Establish the connection and reset selected item
+            connections.set(selectedItem.id, target);
+            selectedItem = null;
             draw();
         }
     });
@@ -71,23 +78,14 @@ function draw() {
         const start = getCenter(item);
         const end = getCenter(target);
         const isCorrect = correctAnswers[itemId] === target.id;
-       // ctx.strokeStyle = isCorrect ? 'green' : 'red';
+
+        ctx.strokeStyle = isCorrect ? 'green' : 'red';
         ctx.lineWidth = 20;
         ctx.beginPath();
         ctx.moveTo(start.x, start.y);
         ctx.lineTo(end.x, end.y);
         ctx.stroke();
     });
-
-    if (isDrawing && startElement) {
-        const start = getCenter(startElement);
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 20;
-        ctx.beginPath();
-        ctx.moveTo(start.x, start.y);
-        ctx.lineTo(currentMouse.x, currentMouse.y);
-        ctx.stroke();
-    }
 }
 
 // Next button and modal window logic
@@ -95,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('next');
     const modal = document.getElementById('warningModal');
     const closeModal = document.getElementById('closeModal');
+    const scoreDisplay = document.getElementById('score');
 
     startBtn.addEventListener('click', () => {
         const totalItems = document.querySelectorAll('.item').length;
@@ -102,36 +101,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (connections.size < totalItems) {
             modal.style.display = 'flex';
+            modal.querySelector('p').textContent = 'Please connect all items before submitting!';
             return;
         }
 
         connections.forEach((target, itemId) => {
-            const isCorrect = correctAnswers[itemId] === target.id;
-            if (isCorrect) {
+            if (correctAnswers[itemId] === target.id) {
                 score++;
             }
         });
 
-        // Save the score to localStorage for the next game
+        scoreDisplay.textContent = score;
         localStorage.setItem('gameScore', score);
 
-        // All items are connected, now check the score and redirect
         if (score === totalItems) {
-            // Redirect to the next page if all answers are correct
             window.location.href = 'index2.html';
         } else {
-            // Display an alert or message for incorrect answers
             modal.querySelector('p').textContent = `You got ${score} out of ${totalItems} correct. Try again!`;
             modal.style.display = 'flex';
         }
-
-        // Redraw lines with correct/incorrect colors
-        draw();
     });
 
     closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
-        // Reset modal text on close
-        modal.querySelector('p').textContent = 'Please connect all items before starting!';
+        modal.querySelector('p').textContent = 'Please connect all items before submitting!';
     });
+});
+
+// Resize event listener
+window.addEventListener('resize', () => {
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+    draw();
 });
