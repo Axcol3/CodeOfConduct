@@ -79,8 +79,17 @@ function draw() {
         const end = getCenter(target);
         const isCorrect = correctAnswers[itemId] === target.id;
 
-        ctx.strokeStyle = isCorrect ? 'green' : 'red';
-        ctx.lineWidth = 20;
+        // Рисуем "границу" линии
+        ctx.strokeStyle = 'black'; // цвет границы
+        ctx.lineWidth = 30;        // шире основной линии
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+
+        // Рисуем основную линию поверх границы
+        ctx.strokeStyle = isCorrect ? 'green' : 'red'; // основной цвет линии
+        ctx.lineWidth = 20;                             // уже, чем граница
         ctx.beginPath();
         ctx.moveTo(start.x, start.y);
         ctx.lineTo(end.x, end.y);

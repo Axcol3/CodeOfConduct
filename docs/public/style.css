@@ -250,6 +250,7 @@ button:active {
         height: 100%;
         pointer-events: none;
         z-index: 1;
+
     }
 
     /* --- Headings & Text --- */
